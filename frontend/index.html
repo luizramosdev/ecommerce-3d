@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D STORE</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo" onclick="showPage('home')">3D<span>STORE</span></a>
+      <nav class="nav">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('catalog')">Catálogo</a>
+        <a href="#" onclick="showPage('cart')">Carrinho <span id="cart-count" class="badge">0</span></a>
+      </nav>
+      <div class="header-actions">
+        <div id="auth-area"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="page-home" class="page">
+    <div class="hero">
+      <div class="hero-content">
+        <p class="hero-tag">IMPRESSÃO 3D PREMIUM</p>
+        <h1>COLECIONÁVEIS<br>DE OUTRO NÍVEL.</h1>
+        <p class="hero-sub">Action figures, miniaturas e cenários impressos com tecnologia de ponta e acabamento artesanal.</p>
+        <button class="btn-primary" onclick="showPage('catalog')">EXPLORAR CATÁLOGO</button>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800" alt="3D Print">
+      </div>
+    </div>
+
+    <!-- Featured -->
+    <div class="section">
+      <h2 class="section-title">EM DESTAQUE</h2>
+      <div id="featured-grid" class="product-grid"></div>
+    </div>
+
+    <!-- Categories -->
+    <div class="section">
+      <h2 class="section-title">CATEGORIAS</h2>
+      <div class="categories-grid" id="categories-grid"></div>
+    </div>
+  </section>
+
+  <!-- Catalog -->
+  <section id="page-catalog" class="page hidden">
+    <div class="section">
+      <div class="catalog-header">
+        <h2 class="section-title">TODOS OS PRODUTOS</h2>
+        <div class="catalog-filters">
+          <input type="text" id="search-input" placeholder="Buscar..." class="input-search" oninput="filterProducts()">
+          <select id="category-filter" class="input-select" onchange="filterProducts()">
+            <option value="">Todas categorias</option>
+          </select>
+        </div>
+      </div>
+      <div id="catalog-grid" class="product-grid"></div>
+    </div>
+  </section>
+
+  <!-- Product Detail -->
+  <section id="page-product" class="page hidden">
+    <div class="product-detail" id="product-detail"></div>
+  </section>
+
+  <!-- Cart -->
+  <section id="page-cart" class="page hidden">
+    <div class="section">
+      <h2 class="section-title">SEU CARRINHO</h2>
+      <div id="cart-content"></div>
+    </div>
+  </section>
+
+  <!-- Orders -->
+  <section id="page-orders" class="page hidden">
+    <div class="section">
+      <h2 class="section-title">MEUS PEDIDOS</h2>
+      <div id="orders-content"></div>
+    </div>
+  </section>
+
+  <!-- Admin -->
+  <section id="page-admin" class="page hidden">
+    <div class="section">
+      <h2 class="section-title">PAINEL ADMIN</h2>
+      <form id="admin-product-form" class="admin-form" onsubmit="handleAddProduct(event)">
+        <h3 style="margin-bottom:20px;font-weight:700">Adicionar Produto</h3>
+        <input type="text" id="prod-name" placeholder="Nome do produto" class="input" required>
+        <input type="number" id="prod-price" placeholder="Valor (R$)" class="input" step="0.01" min="0" required>
+        <input type="text" id="prod-image" placeholder="URL da imagem" class="input" required>
+        <input type="text" id="prod-description" placeholder="Descrição" class="input">
+        <input type="text" id="prod-category" placeholder="Categoria" class="input">
+        <input type="number" id="prod-stock" placeholder="Estoque" class="input" min="0" value="1">
+        <div id="prod-preview" class="prod-preview hidden"><img id="prod-preview-img" alt="Preview"></div>
+        <button type="submit" class="btn-primary full">ADICIONAR PRODUTO</button>
+      </form>
+      <h3 style="margin-top:48px;margin-bottom:24px;font-weight:700">Produtos Cadastrados</h3>
+      <div id="admin-products-list"></div>
+    </div>
+  </section>
+
+  <!-- Auth Modal -->
+  <div id="auth-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h2 id="auth-title">ENTRAR</h2>
+      <form id="auth-form" onsubmit="handleAuth(event)">
+        <input type="text" id="auth-name" placeholder="Nome" class="input" style="display:none">
+        <input type="email" id="auth-email" placeholder="Email" class="input" required>
+        <input type="password" id="auth-password" placeholder="Senha" class="input" required>
+        <button type="submit" class="btn-primary full">ENTRAR</button>
+      </form>
+      <p class="auth-toggle">
+        <span id="auth-toggle-text">Não tem conta?</span>
+        <a href="#" id="auth-toggle-link" onclick="toggleAuthMode(event)">Cadastre-se</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo">3D<span>STORE</span></span>
+        <p>Produtos impressos em 3D com qualidade premium.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#" onclick="showPage('catalog')">Catálogo</a>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 3D Store. Todos os direitos reservados.</div>
+  </footer>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
